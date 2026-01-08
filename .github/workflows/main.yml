@@ -1,10 +1,10 @@
 name: 'Update schedule'
 
-于:
+on:
   schedule:
     - cron: '0 17 */3 * *'
   workflow_dispatch:
-    分支:
+    branches:
       - master
       - dev
       - gd
