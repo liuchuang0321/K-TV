@@ -1,5 +1,5 @@
 🕘️更新时间,#genre#
-2026-01-08 17:52:58,http://iptv.huuc.edu.cn/hls/cctv1hd.m3u8
+2026-01-08 18:12:45,http://iptv.huuc.edu.cn/hls/cctv1hd.m3u8
 
 ,#genre#
 
