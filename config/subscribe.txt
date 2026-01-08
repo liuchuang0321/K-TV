@@ -2,7 +2,7 @@
 # This is a list of subscription sources, with one subscription address per line
 
 https://raw.githubusercontent.com/liuchuang0321/myIPTV/da52e29606cd2273023fb05aa5e501fe3d0f99c4/ipv4.m3u
-https://raw.githubusercontent.com/liuchuang0321/hljcmcciptv/1c0e1a691e512cfcc14e9dccd332b4c16c50ceaf/tvlist.m3u
+
 https://raw.githubusercontent.com/liuchuang0321/fuke-wxb1969-iptv/90b0e4dc4865e15b9f603ba16cbfb7c0b316d4a8/%E9%BB%91%E9%BE%99%E6%B1%9F%E5%93%88%E5%B0%94%E6%BB%A8%E7%A7%BB%E5%8A%A8.txt
 https://raw.githubusercontent.com/liuchuang0321/fuke-wxb1969-iptv/90b0e4dc4865e15b9f603ba16cbfb7c0b316d4a8/%E9%BB%91%E9%BE%99%E6%B1%9F%E7%A7%BB%E5%8A%A8%E7%BB%84%E6%92%AD%E6%BA%90.txt
 https://raw.githubusercontent.com/liuchuang0321/fuke-wxb1969-iptv/90b0e4dc4865e15b9f603ba16cbfb7c0b316d4a8/%E9%9F%A9%E5%9B%BD%E9%AB%98%E6%B8%85.txt
@@ -17,3 +17,4 @@ https://raw.githubusercontent.com/liuchuang0321/fuke-wxb1969-iptv/90b0e4dc4865e1
 [WHITELIST]
 # 以下是订阅源的白名单，白名单内的订阅源获取的接口将不会参与测速，始终保留至结果最前。
 # This is the whitelist for subscription sources. Subscription sources in the whitelist will not participate in speed testing and will always be retained at the front of the results.
+https://raw.githubusercontent.com/liuchuang0321/hljcmcciptv/1c0e1a691e512cfcc14e9dccd332b4c16c50ceaf/tvlist.m3u
