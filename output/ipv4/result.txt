@@ -1,5 +1,5 @@
 🕘️更新时间,#genre#
-2026-01-24 13:30:31,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226016/index.m3u8
+2026-01-25 01:15:33,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226016/index.m3u8
 
 ,#genre#
 
@@ -117,7 +117,6 @@ CCTV-17,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225765/index.m3u8
 ☘️四川频道,#genre#
 乐至综合,http://175.155.106.72:89/live1/live1.m3u8?zsicd
 剑阁综合,https://m3u8.channel.dzsm.com/nmip-media/channellive/channel105549/playlist.m3u8
-叙州新闻综合,http://pili-live-hls.ybcxjd.com/jdh-live/2108111201035597.m3u8?zsicd
 四川科教,http://182.150.115.21:8030/pcgacg/pcgacg_0.m3u8
 广元公共,https://m3u8.channel.dzsm.com/nmip-media/channellive/channel101257/playlist.m3u8
 广元综合,https://m3u8.channel.dzsm.com/nmip-media/channellive/channel100999/playlist.m3u8
@@ -199,20 +198,11 @@ CCTV-17,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225765/index.m3u8
 七台河民生社教,http://live.qthnews.org.cn:1935/live/live2/800k/tzwj_video.m3u8
 
 🌊港·澳·台,#genre#
-纬来体育,rtmp://f13h.mine.nu/sat/tv721
-纬来体育,http://iptv12k.com:35461/live/test167/12345/1237.m3u8
 纬来育乐,rtmp://f13h.mine.nu/sat/tv701
-三立台湾,http://iptv12k.com:35461/live/test167/12345/1286.m3u8
-三立新闻,http://iptv12k.com:35461/live/test167/12345/1285.m3u8
-东森综合,http://iptv12k.com:35461/live/test167/12345/1280.m3u8
 东森超视,rtmp://f13h.mine.nu/sat/tv331
-东森电影,http://iptv12k.com:35461/live/test167/12345/1254.m3u8
-星卫娱乐,http://iptv12k.com:35461/live/test167/12345/1247.m3u8
 
 🎬电影频道,#genre#
-纬来电影,http://iptv12k.com:35461/live/test167/12345/1236.m3u8
 星空卫视,http://iot-mqqt.111yao.cn:8080/live/diyp_xingkong.m3u8
-东森洋片,http://iptv12k.com:35461/live/test167/12345/1256.m3u8
 
 🎥咪咕直播,#genre#
 
