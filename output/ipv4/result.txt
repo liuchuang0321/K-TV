@@ -1,5 +1,5 @@
 🕘️更新时间,#genre#
-2026-09-05 16:56:25,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226016/index.m3u8
+2026-09-06 02:43:56,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226016/index.m3u8
 
 ,#genre#
 
@@ -54,6 +54,7 @@ CCTV-17,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225765/index.m3u8
 
 ☘️广东频道,#genre#
 广东卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226248/index.m3u8
+广州竞赛,http://8.138.7.223/tv/gzjs.m3u8
 深圳卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226313/index.m3u8
 
 ☘️浙江频道,#genre#
