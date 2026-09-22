@@ -1,5 +1,5 @@
 🕘️更新时间,#genre#
-2026-09-22 17:46:12,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226016/index.m3u8
+2026-09-23 04:01:54,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226016/index.m3u8
 
 ,#genre#
 
@@ -50,11 +50,11 @@ CCTV-17,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225765/index.m3u8
 四川卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226338/index.m3u8
 四川卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226513/index.m3u8
 深圳卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226313/index.m3u8
-三沙卫视,http://nn.7x9d.cn/地方台8563/海南.php?id=ssws
 天津卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226459/index.m3u8
 
 ☘️广东频道,#genre#
 广东卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226248/index.m3u8
+广州竞赛,http://8.138.7.223/tv/gzjs.m3u8
 深圳卫视,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226313/index.m3u8
 
 ☘️浙江频道,#genre#
@@ -70,6 +70,7 @@ CCTV-17,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225765/index.m3u8
 青田电视台,http://l.cztvcloud.com/channels/lantian/SXqingtian1/720p.m3u8
 象山新闻综合,http://l.cztvcloud.com/channels/lantian/SXxiangshan1/720p.m3u8
 文成新闻综合,http://l.cztvcloud.com/channels/lantian/SXwencheng1/720p.m3u8
+云和新闻综合,http://l.cztvcloud.com/channels/lantian/SXyunhe1/720p.m3u8
 
 ☘️北京频道,#genre#
 北京卡酷少儿,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225654/index.m3u8
@@ -89,14 +90,13 @@ CCTV-17,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225765/index.m3u8
 辽宁北方,http://dassby.qqff.top:99/live/辽宁北方/index.m3u8
 辽宁影视剧,http://120.76.248.139/live/bfgd/4200000070.m3u8
 辽宁教育青少,http://120.76.248.139/live/bfgd/4200000075.m3u8
-辽宁生活,http://dassby.qqff.top:99/live/辽宁生活/index.m3u8
 辽宁生活,http://120.76.248.139/live/bfgd/4200000073.m3u8
-辽宁经济,http://dassby.qqff.top:99/live/辽宁经济/index.m3u8
-辽宁经济,http://120.76.248.139/live/bfgd/4200000076.m3u8
 辽宁经济,http://120.76.248.139/live/bfgd/4200000480.m3u8
-辽宁都市,http://dassby.qqff.top:99/live/辽宁都市/index.m3u8
+辽宁经济,http://120.76.248.139/live/bfgd/4200000076.m3u8
+辽宁经济,http://dassby.qqff.top:99/live/辽宁经济/index.m3u8
 辽宁都市,http://120.76.248.139/live/bfgd/4200000610.m3u8
 辽宁都市,http://120.76.248.139/live/bfgd/4200000068.m3u8
+辽宁都市,http://dassby.qqff.top:99/live/辽宁都市/index.m3u8
 
 ☘️湖南频道,#genre#
 
@@ -127,11 +127,6 @@ CCTV-17,http:///ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221225765/index.m3u8
 厦门卫视,http://e2.woc.iiiya.cn:28888/rtp/239.61.2.11:8060
 
 ☘️海南频道,#genre#
-海南新闻,http://nn.7x9d.cn/地方台8563/海南.php?id=xwpd
-海南自贸,http://nn.7x9d.cn/地方台8563/海南.php?id=jjpd
-海南文旅,http://nn.7x9d.cn/地方台8563/海南.php?id=wlpd
-海南少儿,http://nn.7x9d.cn/地方台8563/海南.php?id=sepd
-海南公共,http://nn.7x9d.cn/地方台8563/海南.php?id=ggpd
 
 ☘️河南频道,#genre#
 河南都市,http://www.lwfz.fun:8800/rtp/239.16.20.164:11640
