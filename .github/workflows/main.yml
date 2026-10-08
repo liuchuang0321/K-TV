@@ -9,6 +9,10 @@ name: Generate playlist manually
 # Use Docker, the CLI, the GUI, or external object storage for frequent or scheduled runs.
 
 on:
+  schedule:
+    # 沿用旧仓库 K-TV-OLD 的定时：每天 01:00 与 13:00 (UTC 17:00 / 05:00)
+    - cron: '0 17 * * *'
+    - cron: '0 5 * * *'
   workflow_dispatch:
 
 permissions:
