@@ -3,11 +3,18 @@ import os
 import shutil
 import xml.etree.ElementTree as ET
 from datetime import datetime
-from xml.dom import minidom
+
+import pytz
+
+from utils.config import config
 
 
 def write_to_xml(programmes, path):
-    root = ET.Element('tv', attrib={'date': datetime.now().strftime("%Y%m%d%H%M%S +0800")})
+    timezone = pytz.timezone(config.time_zone)
+    root = ET.Element(
+        'tv',
+        attrib={'date': datetime.now(timezone).strftime("%Y%m%d%H%M%S %z")},
+    )
     for channel_id, data in programmes.items():
         channel_elem = ET.SubElement(root, 'channel', attrib={"id": channel_id})
         display_name_elem = ET.SubElement(channel_elem, 'display-name', attrib={"lang": "zh"})
@@ -18,8 +25,9 @@ def write_to_xml(programmes, path):
 
     target_dir = os.path.dirname(path)
     os.makedirs(target_dir, exist_ok=True)
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(minidom.parseString(ET.tostring(root, 'utf-8')).toprettyxml(indent='\t', newl='\n'))
+    tree = ET.ElementTree(root)
+    ET.indent(tree, space='\t')
+    tree.write(path, encoding='utf-8', xml_declaration=True)
 
 
 def compress_to_gz(input_path, output_path):

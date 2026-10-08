@@ -1,0 +1,177 @@
+name: Validate PRs and close invalid ones
+
+on:
+  pull_request_target:
+    types: [ opened, edited, reopened, synchronize ]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr || pr.state !== 'open') {
+              core.info('No open pull request in context, exiting.');
+              return;
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const number = pr.number;
+
+            const prInfo = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number
+            });
+
+            const commits = prInfo.data.commits || 0;
+            const body = prInfo.data.body || '';
+            const authorAssociation = prInfo.data.author_association || 'NONE';
+            const trustedAssociations = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+            const isTrustedContributor = trustedAssociations.has(authorAssociation);
+
+            let page = 1;
+            let files = [];
+            while (true) {
+              const res = await github.rest.pulls.listFiles({
+                owner,
+                repo,
+                pull_number: number,
+                per_page: 100,
+                page
+              });
+              files = files.concat(res.data.map(file => file.filename));
+              if (res.data.length < 100) break;
+              page++;
+            }
+
+            const isGeneratedOrPersonalPath = file =>
+              file === 'config' ||
+              file.startsWith('config/') ||
+              file === 'output' ||
+              file.startsWith('output/');
+
+            const changedConfigOrOutput = files.some(isGeneratedOrPersonalPath);
+            const contributionConfirmation = /\[\s*x\s*\][^\n]*pr-contribution-confirmed/i.test(body);
+
+            const invalidReasons = [];
+            if (commits === 0) {
+              invalidReasons.push('This pull request does not contain any commits.');
+            }
+            if (!isTrustedContributor && !contributionConfirmation) {
+              invalidReasons.push('The intentional contribution confirmation is missing.');
+            }
+            if (!isTrustedContributor && changedConfigOrOutput) {
+              invalidReasons.push('The pull request modifies config/ or output/, which is reserved for personal configuration and generated results.');
+            }
+
+            const invalidLabel = 'invalid';
+            const currentLabels = (prInfo.data.labels || []).map(label => label.name);
+
+            if (invalidReasons.length === 0) {
+              if (currentLabels.includes(invalidLabel)) {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner,
+                    repo,
+                    issue_number: number,
+                    name: invalidLabel
+                  });
+                } catch (error) {
+                  core.warning('Failed to remove invalid label: ' + error.message);
+                }
+              }
+              core.info('PR looks valid.');
+              return;
+            }
+
+            try {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: number,
+                labels: [invalidLabel]
+              });
+            } catch (error) {
+              try {
+                await github.rest.issues.createLabel({
+                  owner,
+                  repo,
+                  name: invalidLabel,
+                  color: 'd73a4a',
+                  description: 'Automatically marked invalid PR'
+                });
+              } catch (createError) {
+                if (createError.status !== 422) {
+                  core.warning('Failed to create invalid label: ' + createError.message);
+                }
+              }
+              try {
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number: number,
+                  labels: [invalidLabel]
+                });
+              } catch (addError) {
+                core.warning('Failed to add invalid label: ' + addError.message);
+              }
+            }
+
+            const marker = '<!-- invalid-pr-validator -->';
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: number,
+              per_page: 100
+            });
+            const hasValidationComment = comments.some(comment => comment.body && comment.body.includes(marker));
+
+            if (!hasValidationComment) {
+              const commentBody = [
+                marker,
+                'This pull request was automatically labeled as `invalid` and closed because:',
+                '',
+                ...invalidReasons.map(reason => `- ${reason}`),
+                '',
+                'If you only wanted to update your own fork:',
+                '',
+                '1. Return to your fork repository.',
+                '2. Click **Sync fork**.',
+                '3. Click **Update branch**.',
+                '4. If there is a conflict, use **Discard commits**.',
+                '',
+                'Pull Requests are for intentional code contributions to the upstream repository.',
+                'Please reopen this PR only after correcting the issue and confirming the contribution checklist.',
+                '',
+                '如果你只是想更新自己的 Fork，请按照上面的步骤操作，不要创建 PR。'
+              ].join('\n');
+              try {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: number,
+                  body: commentBody
+                });
+              } catch (error) {
+                core.warning('Failed to create validation comment: ' + error.message);
+              }
+            }
+
+            await github.rest.pulls.update({
+              owner,
+              repo,
+              pull_number: number,
+              state: 'closed'
+            });
+
+            core.info('PR closed and labeled as invalid: ' + invalidReasons.join('; '));

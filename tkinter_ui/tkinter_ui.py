@@ -19,9 +19,11 @@ from prefer import PreferUI
 from local import LocalUI
 from subscribe import SubscribeUI
 from epg import EpgUI
-from utils.speed import check_ffmpeg_installed_status
+from utils.ffmpeg import check_ffmpeg_installed_status
 import pystray
 from service.app import run_service
+import atexit
+from service.rtmp import stop_rtmp_service
 
 
 class TkinterUI:
@@ -43,6 +45,7 @@ class TkinterUI:
         self.epg_ui = EpgUI()
         self.update_source = UpdateSource()
         self.update_running = False
+        self.loop = None
         self.result_url = None
         self.now = None
 
@@ -117,6 +120,7 @@ class TkinterUI:
             self.update_source.stop()
 
         loop = asyncio.new_event_loop()
+        self.loop = loop
 
         def run_loop():
             asyncio.set_event_loop(loop)
@@ -126,9 +130,12 @@ class TkinterUI:
         self.thread.start()
 
     def stop(self):
-        asyncio.get_event_loop().stop()
+        if self.loop and self.loop.is_running():
+            self.loop.call_soon_threadsafe(self.loop.stop)
 
     def update_progress(self, title, progress, finished=False, url=None, now=None):
+        if isinstance(url, dict):
+            url = url.get("service_url")
         self.progress_bar["value"] = progress
         self.now = now
         if finished and now:
@@ -282,4 +289,6 @@ if __name__ == "__main__":
     root.after(0, config.copy("output"))
     if config.open_service:
         root.after(0, threading.Thread(target=run_service, daemon=True).start())
+        if config.open_rtmp and sys.platform == "win32":
+            atexit.register(stop_rtmp_service)
     root.mainloop()

@@ -1,13 +1,14 @@
-FROM python:3.13-alpine AS builder
+FROM python:3.14-alpine AS builder
 
+ARG APP_WORKDIR=/iptv-api
 ARG NGINX_VER=1.27.4
 ARG RTMP_VER=1.2.2
 
-WORKDIR /app
+WORKDIR $APP_WORKDIR
 
 COPY Pipfile* ./
 
-RUN apk update && apk add --no-cache gcc musl-dev python3-dev libffi-dev zlib-dev jpeg-dev wget make pcre-dev openssl-dev \
+RUN apk add --no-cache gcc musl-dev python3-dev libffi-dev zlib-dev jpeg-dev wget make pcre-dev openssl-dev \
   && pip install pipenv \
   && PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
@@ -17,17 +18,18 @@ RUN wget https://nginx.org/download/nginx-${NGINX_VER}.tar.gz && \
 RUN wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VER}.tar.gz && \
     tar xzf v${RTMP_VER}.tar.gz
 
-WORKDIR /app/nginx-${NGINX_VER}
+WORKDIR $APP_WORKDIR/nginx-${NGINX_VER}
 RUN ./configure \
-    --add-module=/app/nginx-rtmp-module-${RTMP_VER} \
+    --add-module=$APP_WORKDIR/nginx-rtmp-module-${RTMP_VER} \
     --conf-path=/etc/nginx/nginx.conf \
     --error-log-path=/var/log/nginx/error.log \
     --http-log-path=/var/log/nginx/access.log \
+    --with-cc-opt='-DNGX_HAVE_PWRITE=0 -DNGX_HAVE_PWRITEV=0' \
     --with-http_ssl_module && \
     make && \
     make install
 
-FROM python:3.13-alpine
+FROM python:3.14-alpine
 
 ARG APP_WORKDIR=/iptv-api
 
@@ -36,20 +38,22 @@ ENV APP_PORT=5180
 ENV NGINX_HTTP_PORT=8080
 ENV NGINX_RTMP_PORT=1935
 ENV PUBLIC_PORT=80
-ENV PATH="/.venv/bin:/usr/local/nginx/sbin:$PATH"
+ENV PATH="$APP_WORKDIR/.venv/bin:/usr/local/nginx/sbin:$PATH"
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONIOENCODING=utf-8
 
 WORKDIR $APP_WORKDIR
 
 COPY . $APP_WORKDIR
 
-COPY --from=builder /app/.venv /.venv
+COPY --from=builder $APP_WORKDIR/.venv $APP_WORKDIR/.venv
 COPY --from=builder /usr/local/nginx /usr/local/nginx
 
 RUN mkdir -p /var/log/nginx && \
   ln -sf /dev/stdout /var/log/nginx/access.log && \
   ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN apk update && apk add --no-cache ffmpeg pcre
+RUN apk add --no-cache ffmpeg pcre
 
 EXPOSE $NGINX_HTTP_PORT
 
@@ -65,4 +69,4 @@ COPY stat.xsl /usr/local/nginx/html/stat.xsl
 
 RUN chmod +x /iptv-api-entrypoint.sh
 
-ENTRYPOINT /iptv-api-entrypoint.sh
+ENTRYPOINT ["/iptv-api-entrypoint.sh"]

@@ -4,8 +4,11 @@ docs
 tkinter_ui
 **/*.log
 **/*.md
-**/*.jpg
-**/*.png
+static/images
+docs/images
+scripts/gui_showcase
+tests
+output/screenshots
 .git
 .github
 .gitignore
